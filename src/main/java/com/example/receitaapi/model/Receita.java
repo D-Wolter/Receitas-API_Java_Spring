@@ -10,30 +10,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Data
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class ReceitaModel {
+public class Receita {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private Long id;
 
-  @Column(name = "name", length = 100, nullable = false)
+  @Column(name = "nome", length = 100, nullable = false)
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String nome;
+
+  @Column(name = "descricao", length = 250, nullable = false)
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private String descricao;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
   @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -41,28 +44,18 @@ public class ReceitaModel {
   @Column(name = "data_inclusao", updatable = false)
   private Date dataInclusao;
 
-  @JsonInclude(JsonInclude.Include.NON_NULL)
   @Column(name = "autor", length = 100, nullable = false)
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   private String autor;
 
-  @Transient
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private List<Ingredinte> ingredientes;
-
-  @Lob
   @Column(name = "modo_de_preparo", nullable = false)
   @JsonInclude(JsonInclude.Include.NON_NULL)
+  @Lob
   private String modoDePreparo;
 
-  @Column(name = "descricao", length = 250, nullable = false)
+  @Column(name = "ingredientes")
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String descricao;
+  @OneToMany(mappedBy = "receita")
+  private List<Ingrediente> ingredientes;
 
-
-  public ReceitaModel(long id, Date dataInclusao, String nomeReceita) {
-    this.id = id;
-    this.dataInclusao = dataInclusao;
-    this.nome = nomeReceita;
-  }
 }
-

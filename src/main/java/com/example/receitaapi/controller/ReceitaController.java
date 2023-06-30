@@ -1,12 +1,10 @@
 package com.example.receitaapi.controller;
 
-import com.example.receitaapi.model.ReceitaModel;
-import com.example.receitaapi.repository.ReceitaRepository;
-import java.util.Date;
+import com.example.receitaapi.model.Receita;
+import com.example.receitaapi.service.ReceitaService;
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,50 +14,46 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/receitas")
 public class ReceitaController {
 
   @Autowired
-  ReceitaRepository receitaRepository;
+  ReceitaService receitaService;
 
   @GetMapping
-  public List<ReceitaModel> listarReceitas() {
-    return receitaRepository.findAll();
+  public ResponseEntity<List<Receita>> listarReceitas() {
+    return ResponseEntity.ok().body(receitaService.listar());
   }
 
   @GetMapping(value = "/{id}")
-  public ResponseEntity<?> buscaReceitas(@PathVariable("id") Long id) {
-    Optional<ReceitaModel> receitaModel = receitaRepository.findById(id);
-    if (receitaModel.isPresent()) {
-      return ResponseEntity.ok().body(receitaModel);
-    }
-    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-        .body("Receita com id: " + id + " não encontrado na base de dados");
+  public ResponseEntity<?> buscaReceita(@PathVariable("id") Long id) {
+    return ResponseEntity.ok().body(receitaService.buscarPorId(id));
   }
 
   @PostMapping
-  public ReceitaModel salvarReceita(@RequestBody ReceitaModel receitaModel) {
-    receitaModel.setDataInclusao(new Date());
-    return receitaRepository.save(receitaModel);
+  public ResponseEntity<?> salvarReceita(@RequestBody Receita receita) {
+    receita = receitaService.salvar(receita);
+    URI uri = ServletUriComponentsBuilder
+        .fromCurrentRequest()
+        .path("/{id}")
+        .buildAndExpand(receita.getId())
+        .toUri();
+    return ResponseEntity.created(uri).build();
   }
 
   @PutMapping(value = "/{id}")
-  public ReceitaModel atualizarReceita(@PathVariable("id") Long id,
-      @RequestBody ReceitaModel receitaModel) {
-    receitaModel.setId(id);
-    return receitaRepository.save(receitaModel);
+  public ResponseEntity<?> atualizarReceita(@PathVariable("id") Long id,
+      @RequestBody Receita receita) {
+    receitaService.atualizar(id, receita);
+    return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<?> excluirReceita(@PathVariable("id") Long id) {
-    try {
-      receitaRepository.deleteById(id);
-      return ResponseEntity.ok().body("Receita ecluida com sucesso!");
-    } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registro inexistente");
-    }
+    receitaService.excluir(id);
+    return ResponseEntity.noContent().build();
   }
-
 }

@@ -38,6 +38,7 @@ public class ReceitaModel {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
   @JsonInclude(JsonInclude.Include.NON_NULL)
   @Temporal(TemporalType.DATE)
+  @Column(name = "data_inclusao", updatable = false)
   private Date dataInclusao;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -47,7 +48,7 @@ public class ReceitaModel {
   @Transient
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private List<Ingredinte> ingredientes;
-  
+
   @Lob
   @Column(name = "modo_de_preparo", nullable = false)
   @JsonInclude(JsonInclude.Include.NON_NULL)

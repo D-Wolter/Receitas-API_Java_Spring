@@ -59,9 +59,9 @@ public class ReceitaModel {
   private String descricao;
 
 
-  public ReceitaModel(long id, String descricao, String nomeReceita) {
+  public ReceitaModel(long id, Date dataInclusao, String nomeReceita) {
     this.id = id;
-    this.descricao = descricao;
+    this.dataInclusao = dataInclusao;
     this.nome = nomeReceita;
   }
 }

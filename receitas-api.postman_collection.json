@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "c48bd547-b487-4045-8cd2-169632d9ee49",
+		"name": "receitas-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28273278"
+	},
+	"item": [
+		{
+			"name": "Busca receita por ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/receitas/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "altera receita por ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Arro de Peru\",\n    \"descricao\": \"Arro de Forno com Peru\",\n    \"autor\": \"Wolter\",\n    \"modoDePreparo\": \"Pege o arroz que sobrou do natal mais o Peru desfiado, distribua na forma em varias camadas, ponha por cima queijo ralado, ponha no forno por 30 min, e esta feito\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/receitas/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adiciona nova receita",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Arro de pato\",\n    \"descricao\": \"Arro de Forno com pato\",\n    \"autor\": \"Daniel\",\n    \"modoDePreparo\": \"Pege o arroz que sobrou do natal mais o resto do pato desfiado, distribua na forma em varias camadas, ponha por cima queijo ralado, ponha no forno por 30 min, e esta feito\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/receitas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "busca todas as receitas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/receitas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "excluir receita por id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/receitas/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

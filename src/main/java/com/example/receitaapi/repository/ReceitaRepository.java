@@ -1,8 +1,10 @@
 package com.example.receitaapi.repository;
 
-import com.example.receitaapi.model.ReceitaModel;
+import com.example.receitaapi.model.Receita;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ReceitaRepository extends JpaRepository<ReceitaModel, Long> {
+@Repository
+public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
 }
